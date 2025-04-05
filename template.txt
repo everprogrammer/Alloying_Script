@@ -1,0 +1,35 @@
+1. let's have a practical problem. imagine we have recycled and aluminum scrap and
+molten metal of 100 kilograms have been produced in the crucible. the composition of the 
+molten metal that is derived by XRF analysis is as follows:
+Al = 90.17%, Si = 7.33%, Fe = 0.855%, Cu = 1.2%, Mn = 0.0577%, Mg = ~0.0000%, Cr = ~0.0091%
+Ni = 0.0221%, Zn = 0.0831%, Sn = ~0.0064%, Ti = 0.0343%, Pb = 0.218%, Be = ~0.0000%
+Ca = 0.0003%, Sr = ~0.0000%, V = 0.0139%, Zr = ~0.000%
+Now we want to add master alloys (all of the master alloys like Al-Cu are 50%) to make
+A380 out of the molten metal with minimum addition of master alloys or pure aluminum.
+I need you to run the latest script and report me the minimum addition of each master alloy and/or pure aluminum to make A380 as 
+well as initial and final weight of the molten metal.
+There is an important factors to take into consideration:
+after adding for instance 100 grams of Al-Cu 50% master alloy, 50 grams of cupper 
+as well as 50 grams of aluminum is added further diluting other elements within the 
+composition
+------------------------------------------------------------------------------------
+2. let's have a practical problem. imagine we have recycled and aluminum scrap and
+molten metal of 100 kilograms have been produced in the crucible. the composition of the 
+molten metal that is derived by XRF analysis is as follows:
+Al = 95.49%, Si = 2.96%, Fe = 0.653%, Cu = 0.528%, Mn = 0.0847%, Mg = ~0.0000%, Cr = ~0.0052%
+Ni = 0.012%, Zn = 0.613%, Sn = ~0.0065%, Ti = 0.0263%, Pb = 0.157%, Be = ~0.0000%
+Ca = 0.0016%, Sr = ~0.0000%, V = 0.0087%, Zr = ~0.000%
+Now we want to add master alloys (all of the master alloys like Al-Cu are 50%) to make
+A380 out of the molten metal with minimum addition of master alloys or pure aluminum.
+I need you to run the latest script and report me the minimum addition of each master alloy and/or pure aluminum to make A380 as 
+well as initial and final weight of the molten metal.
+There is an important factors to take into consideration:
+after adding for instance 100 grams of Al-Cu 50% master alloy, 50 grams of cupper 
+as well as 50 grams of aluminum is added further diluting other elements within the 
+composition
+------------------------------------------------------------------------------------
+well, that is not a great approach because i need a script that gives me the 
+minimum additions of master alloys and/or pure aluminum not giving me something 
+that is way too much addition that is why i recommended using the linear programming 
+approach so it minimizes the addition. i want a great script that gives me minimum 
+addition not just some basic easy script to do so!
