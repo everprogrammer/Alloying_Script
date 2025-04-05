@@ -12,6 +12,24 @@ There is an important factors to take into consideration:
 after adding for instance 100 grams of Al-Cu 50% master alloy, 50 grams of cupper 
 as well as 50 grams of aluminum is added further diluting other elements within the 
 composition
+
+>> minimal solutions for this problem = 
+additions: {'Al-Si': 0.42, 'Al-Cu': 3.6}
+final_weight: 104.02
+{
+    'success': True,
+    'additions': {'Al-Si': 0.42, 'Al-Cu': 3.6},
+    'cost': 19.26,
+    'final_weight': 104.02,
+    'final_composition': {
+        'Al': 89.99,
+        'Si': 7.5,
+        'Fe': 0.82,
+        'Cu': 3.0,
+        'Pb': 0.21
+    },
+    'method': 'master_alloy'
+}    
 ------------------------------------------------------------------------------------
 2. let's have a practical problem. imagine we have recycled and aluminum scrap and
 molten metal of 100 kilograms have been produced in the crucible. the composition of the 
