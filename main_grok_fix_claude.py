@@ -29,110 +29,187 @@ def convert_molten_metal_to_alloy(initial_mass, initial_comp, target_ranges, mas
     initial_other = sum(trace_elements.values()) if trace_elements else 0
     initial_mass_elements['Al'] = initial_mass * (1 - (sum(initial_comp.values()) + initial_other) / 100)
     if trace_elements:
-        initial_mass_elements.update(trace_elements)
-    initial_mass_elements['Other'] = initial_other
-
-    # Variables: [pure_al, scrap, al_si, al_cu, al_mn, al_mg, al_zn, ...] if scrap is available
-    # Otherwise: [pure_al, al_si, al_cu, al_mn, al_mg, al_zn, ...]
-    c = np.array([1] + [1] * len(master_alloys)) if scrap_mass_max is None or scrap_mass_max == 0 else np.array([1, 1] + [1] * len(master_alloys))
-
-    # Constraints: A_ub @ x <= b_ub
-    A_ub = []
-    b_ub = []
-
-    # For each element in target_ranges, add min and max constraints
+        for k, v in trace_elements.items():
+            initial_mass_elements[k] = v
+    
+    # Define variables: [pure_al, scrap, al_si, al_cu, al_mn, ...] or [pure_al, al_si, al_cu, ...]
+    use_scrap = scrap_mass_max is not None and scrap_mass_max > 0
+    
+    # Objective: Minimize total additions (coefficients are all 1)
+    c = np.ones(1 + (1 if use_scrap else 0) + len(master_alloys))
+    
+    # Define A_eq and b_eq for each element to ensure it meets target ranges
+    # Create arrays for the linear constraints
+    num_constraints = 2 * len(target_ranges)  # Min and max for each element
+    if trace_elements and trace_limits:
+        num_constraints += len(trace_limits)  # Upper limits for trace elements
+    
+    num_vars = 1 + (1 if use_scrap else 0) + len(master_alloys)
+    
+    A_ub = np.zeros((num_constraints, num_vars))
+    b_ub = np.zeros(num_constraints)
+    
+    constraint_idx = 0
+    
+    # Process each element in target_ranges
     for elem, (min_val, max_val) in target_ranges.items():
-        initial_elem_mass = initial_mass_elements.get(elem, 0)
-        row = [min_val / 100]
-        if scrap_mass_max is not None and scrap_mass_max > 0:
-            scrap_contrib = scrap_comp.get(elem, 0) / 100
-            row.append(min_val / 100 - scrap_contrib)
-        for master in master_alloys:
+        initial_elem_kg = initial_mass_elements.get(elem, 0)
+        
+        # Min constraint: ensure final composition has at least min_val% of element
+        # (initial_elem_kg + additions of elem) / (initial_mass + all_additions) >= min_val/100
+        # Rearranging: (initial_elem_kg + additions of elem) - (min_val/100) * (initial_mass + all_additions) >= 0
+        # Further: additions of elem - (min_val/100) * all_additions >= (min_val/100) * initial_mass - initial_elem_kg
+        
+        # Setup row for minimum constraint
+        row_min = np.zeros(num_vars)
+        row_min[0] = -min_val / 100  # Pure Al contribution (dilutes the element)
+        
+        col_idx = 1
+        if use_scrap:
+            row_min[col_idx] = scrap_comp.get(elem, 0) / 100 - min_val / 100  # Scrap contribution
+            col_idx += 1
+            
+        for i, master in enumerate(master_alloys):
             if master == elem:
-                row.append(min_val / 100 - 0.5)
+                row_min[col_idx + i] = 0.5 - min_val / 100  # Master alloy adds 50% of the element
             else:
-                row.append(min_val / 100)
-        A_ub.append(row)
-        b_ub.append(initial_elem_mass - (min_val / 100) * initial_mass)
-
-        row = [-max_val / 100]
-        if scrap_mass_max is not None and scrap_mass_max > 0:
-            scrap_contrib = scrap_comp.get(elem, 0) / 100
-            row.append(scrap_contrib - max_val / 100)
-        for master in master_alloys:
+                row_min[col_idx + i] = -min_val / 100  # Other master alloys dilute the element
+        
+        # Right-hand side: min requirement minus what we already have
+        b_ub_min = initial_elem_kg - (min_val / 100) * initial_mass
+        
+        # Add to constraints
+        A_ub[constraint_idx] = -row_min  # Flip signs for >= constraint
+        b_ub[constraint_idx] = -b_ub_min  # Flip signs for >= constraint
+        constraint_idx += 1
+        
+        # Max constraint: ensure final composition has at most max_val% of element
+        # (initial_elem_kg + additions of elem) / (initial_mass + all_additions) <= max_val/100
+        
+        # Setup row for maximum constraint
+        row_max = np.zeros(num_vars)
+        row_max[0] = -max_val / 100  # Pure Al contribution (dilutes the element)
+        
+        col_idx = 1
+        if use_scrap:
+            row_max[col_idx] = scrap_comp.get(elem, 0) / 100 - max_val / 100  # Scrap contribution
+            col_idx += 1
+            
+        for i, master in enumerate(master_alloys):
             if master == elem:
-                row.append(0.5 - max_val / 100)
+                row_max[col_idx + i] = 0.5 - max_val / 100  # Master alloy adds 50% of the element
             else:
-                row.append(-max_val / 100)
-        A_ub.append(row)
-        b_ub.append(initial_elem_mass - (max_val / 100) * initial_mass)
-
-    # Add constraints for trace elements if specified
+                row_max[col_idx + i] = -max_val / 100  # Other master alloys dilute the element
+        
+        # Right-hand side: max requirement minus what we already have
+        b_ub_max = initial_elem_kg - (max_val / 100) * initial_mass
+        
+        # Add to constraints
+        A_ub[constraint_idx] = row_max
+        b_ub[constraint_idx] = b_ub_max
+        constraint_idx += 1
+    
+    # Add trace element constraints if specified
     if trace_elements and trace_limits:
         for elem, limit in trace_limits.items():
-            trace_mass = trace_elements[elem]
-            scrap_trace_contrib = scrap_comp.get(elem, 0) / 100 if scrap_mass_max is not None and scrap_mass_max > 0 else 0
-            row = [-limit / 100]
-            if scrap_mass_max is not None and scrap_mass_max > 0:
-                row.append(scrap_trace_contrib - limit / 100)
-            row.extend([-limit / 100] * len(master_alloys))
-            A_ub.append(row)
-            b_ub.append(trace_mass - (limit / 100) * initial_mass)
-
+            trace_mass = initial_mass_elements.get(elem, 0)
+            
+            row = np.zeros(num_vars)
+            row[0] = -limit / 100  # Pure Al dilutes the trace element
+            
+            col_idx = 1
+            if use_scrap:
+                row[col_idx] = scrap_comp.get(elem, 0) / 100 - limit / 100
+                col_idx += 1
+                
+            for i in range(len(master_alloys)):
+                row[col_idx + i] = -limit / 100  # All master alloys dilute the trace element
+            
+            # Right-hand side: limit minus what we already have
+            b_trace = trace_mass - (limit / 100) * initial_mass
+            
+            # Add to constraints
+            A_ub[constraint_idx] = row
+            b_ub[constraint_idx] = b_trace
+            constraint_idx += 1
+    
     # Add crucible capacity constraint if specified
     if crucible_capacity is not None:
-        row = [1] + [1] * len(master_alloys) if scrap_mass_max is None or scrap_mass_max == 0 else [1, 1] + [1] * len(master_alloys)
-        A_ub.append(row)
-        b_ub.append(crucible_capacity - initial_mass)
-
-    # Bounds: Non-negative additions, with upper bound for scrap
-    if scrap_mass_max is not None and scrap_mass_max > 0:
-        bounds = [(0, None), (0, scrap_mass_max)] + [(0, None)] * len(master_alloys)
-    else:
-        bounds = [(0, None)] * (1 + len(master_alloys))
-
-    # Run linear programming
+        row_capacity = np.ones(num_vars)  # All variables represent mass additions
+        A_ub = np.vstack([A_ub, row_capacity])
+        b_ub = np.append(b_ub, crucible_capacity - initial_mass)
+    
+    # Set bounds for variables
+    bounds = [(0, None)] * num_vars  # All additions must be non-negative
+    if use_scrap:
+        bounds[1] = (0, scrap_mass_max)  # Limit on scrap addition
+    
+    # Run linear programming optimization
     result = linprog(c, A_ub=A_ub, b_ub=b_ub, bounds=bounds, method='highs')
-
+    
     # Process results
     if result.success:
-        pure_al = result.x[0] * melting_loss_factor
-        scrap_added = result.x[1] * melting_loss_factor if scrap_mass_max is not None and scrap_mass_max > 0 else 0
-        master_adds = {elem: mass * melting_loss_factor for elem, mass in zip(master_alloys, result.x[1:] if scrap_mass_max is None or scrap_mass_max == 0 else result.x[2:])}
+        # Extract results
+        additions = result.x * melting_loss_factor
         
         # Round additions to practical amounts
-        pure_al = round(pure_al / round_to) * round_to
-        scrap_added = round(scrap_added / round_to) * round_to
-        master_adds = {elem: round(mass / round_to) * round_to for elem, mass in master_adds.items()}
+        additions_rounded = np.round(additions / round_to) * round_to
+        
+        # Parse results into a structured dictionary
+        pure_al = additions_rounded[0]
+        
+        idx = 1
+        scrap_added = 0
+        if use_scrap:
+            scrap_added = additions_rounded[idx]
+            idx += 1
+        
+        master_adds = {elem: additions_rounded[idx + i] for i, elem in enumerate(master_alloys)}
         
         # Calculate final mass and composition
         final_mass = initial_mass_elements.copy()
         final_mass['Al'] += pure_al
+        
         if scrap_added > 0 and scrap_comp:
             for elem, comp in scrap_comp.items():
-                final_mass[elem] = final_mass.get(elem, 0) + (comp / 100) * scrap_added
+                if elem not in final_mass:
+                    final_mass[elem] = 0
+                final_mass[elem] += (comp / 100) * scrap_added
+            
+            # Calculate aluminum in scrap
             scrap_al = 1 - sum(comp / 100 for comp in scrap_comp.values())
             final_mass['Al'] += scrap_al * scrap_added
+        
+        # Add master alloy contributions
         for elem, mass in master_adds.items():
-            final_mass['Al'] += 0.5 * mass
-            final_mass[elem] = final_mass.get(elem, 0) + 0.5 * mass
+            if mass > 0:
+                final_mass['Al'] += 0.5 * mass  # 50% Al in master alloy
+                if elem not in final_mass:
+                    final_mass[elem] = 0
+                final_mass[elem] += 0.5 * mass  # 50% element in master alloy
+        
+        # Calculate total mass and final composition percentages
         total_mass = sum(final_mass.values())
         final_comp = {k: (v / total_mass) * 100 for k, v in final_mass.items()}
         
-        # Prepare results
+        # Only include master alloys with non-zero additions in results
+        master_alloy_additions = {f"Al-{elem} (50%)": mass for elem, mass in master_adds.items() if mass > 0}
+        
+        # Prepare results dictionary
         results = {
             'initial_mass': initial_mass,
             'initial_composition_kg': initial_mass_elements,
             'additions': {
                 'Pure Aluminum': pure_al,
-                'Scrap Metal': scrap_added,
-                **{f"Al-{elem} (50%)": mass for elem, mass in master_adds.items() if mass > 0}
+                **({"Scrap Metal": scrap_added} if use_scrap else {}),
+                **master_alloy_additions
             },
             'total_added_mass': sum([pure_al, scrap_added] + list(master_adds.values())),
             'final_total_mass': total_mass,
             'final_mass_kg': final_mass,
             'final_composition_percent': final_comp
         }
+        
         return results
     else:
         raise Exception("Optimization failed: " + result.message)
@@ -145,14 +222,11 @@ def print_results(results, target_ranges, trace_elements=None, trace_limits=None
     
     print("\nAdditions (rounded for practicality):")
     for elem, mass in results['additions'].items():
-        print(f"  {elem}: {mass:.2f} kg")
+        if mass > 0:  # Only print non-zero additions
+            print(f"  {elem}: {mass:.2f} kg")
     
     print(f"Total added mass: {results['total_added_mass']:.2f} kg")
     print(f"Final total mass: {results['final_total_mass']:.2f} kg")
-    
-    print("\nFinal mass of elements (kg):")
-    for elem, mass in results['final_mass_kg'].items():
-        print(f"  {elem}: {mass:.4f} kg")
     
     print("\nFinal composition (%):")
     for elem, (min_val, max_val) in target_ranges.items():
@@ -209,8 +283,8 @@ if __name__ == "__main__":
         initial_comp=initial_comp,
         target_ranges=target_alloy,
         master_alloys=master_alloys,
-        scrap_mass_max=scrap_mass_max,
-        scrap_comp=scrap_comp,
+        scrap_mass_max=None,
+        scrap_comp=None,
         trace_elements=trace_elements,
         trace_limits=trace_limits,
         crucible_capacity=None,  # No crucible capacity constraint
