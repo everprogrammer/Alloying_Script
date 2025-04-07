@@ -46,4 +46,4 @@ MASTER_ALLOYS = {
     }
 
 # Define scrap composition (e.g., low-grade scrap with 5% Si, 0.1% Mg)
-SCRAP_COMP = {'Al':88, 'Si': 10, 'Cu': 0.05}
+SCRAP_COMP = {'Al':88, 'Si': 8, 'Cu': 7}
