@@ -29,6 +29,31 @@ def optimize_alloy(
             total_cost += scrap_cost_ratio * x[-1]  # Scrap cost = scrap_cost_ratio x
         return total_cost
     
+    def get_final_composition(x):
+        total_addition = np.sum(x)
+        final_mass = initial_mass + total_addition
+        element_masses = {
+            el: (initial_composition.get(el, 0) / 100) * initial_mass 
+            for el in target_spec
+        }
+        
+        # Add master alloys
+        for i, key in enumerate(alloy_keys[:-1] if scrap_composition else alloy_keys):
+            for el, pct in master_alloys[key].items():
+                element_masses[el] = element_masses.get(el, 0) + (pct / 100) * x[i]
+        
+        # Add scrap (if used)
+        if scrap_composition:
+            for el, pct in scrap_composition.items():
+                element_masses[el] = element_masses.get(el, 0) + (pct / 100) * x[-1]
+        
+        # Convert to percentages
+        final_composition = {
+            el: (mass / final_mass) * 100 
+            for el, mass in element_masses.items()
+        }
+        return final_composition, final_mass
+    
     # --- Step 2: Constraints ---
     def constraints(x):
         total_addition = np.sum(x)
@@ -77,9 +102,9 @@ def optimize_alloy(
     
     # --- Step 5: Print Results ---
     if result.success:
-        print("\nOptimization successful!")
+        final_composition, final_mass = get_final_composition(result.x)
         total_added = np.sum(result.x)
-        final_mass = initial_mass + total_added
+        print("\nOptimization successful!")
         print(f"Initial mass: {initial_mass:.2f} kg")
         print(f"Total additions: {total_added:.2f} kg")
         print(f"Final mass: {final_mass:.2f} kg")
@@ -89,6 +114,12 @@ def optimize_alloy(
             if result.x[i] > 1e-3:
                 cost = scrap_cost_ratio if key == 'Scrap' else 1.0
                 print(f"Add {result.x[i]:.3f} kg of {key} (cost: {cost}x)")
+        # Print final composition and validate ranges
+        print("\nFinal Composition (wt%):")
+        for el, (low, high) in target_spec.items():
+            pct = final_composition.get(el, 0)
+            status = "✓" if low <= pct <= high else "✗ (OUT OF RANGE)"
+            print(f"{el}: {pct:.4f}% (target: {low}-{high}%) {status}")
     else:
         print("\nOptimization failed:", result.message)
     

@@ -1,3 +1,5 @@
+## Structure of the script
+
 import numpy as np
 from scipy.optimize import minimize
 import constants as c
