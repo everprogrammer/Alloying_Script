@@ -21,8 +21,8 @@ target_ranges_A356 = {
 
 target_ranges_A380 = {
     "Al": (80, 90),          # Aluminum (base metal)
-    "Si": (7.6, 9.5),          # Silicon
-    "Cu": (3.1, 4.0),          # Copper
+    "Si": (7.5, 9.5),          # Silicon
+    "Cu": (3.0, 4.0),          # Cupper
     "Fe": (0.0, 1.3),          # Iron (max 1.3%)
     "Zn": (0.0, 3.0),          # Zinc
     "Mn": (0.0, 0.5),          # Manganese
@@ -31,3 +31,13 @@ target_ranges_A380 = {
     "Sn": (0.0, 0.35),         # Tin
     "Pb": (0.0, 0.15),         # Lead
 }
+
+master_alloys = {
+    'Pure_Al': {'Al': 100},
+    'Al-Si': {'Si': 50, 'Al': 50},
+    'Al-Cu': {'Cu': 50, 'Al': 50},
+    'Al-Fe': {'Fe': 50, 'Al': 50},
+    'Al-Mg': {'Mg': 50, 'Al': 50},  # Critical for A356!
+    'Al-Mn': {'Mn': 50, 'Al': 50},
+    'Al-Zn': {'Zn': 50, 'Al': 50},
+    }
