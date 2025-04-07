@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.optimize import minimize
-import constants as c 
+from constants import (INITIAL_COMP_AL91, INITIAL_COMP_AL95, MASTER_ALLOYS,
+                       TARGET_RANGES_A356, TARGET_RANGES_A380, INITIAL_COMP_A380_TEST)
 
 
 def optimize_alloy(
@@ -101,16 +102,15 @@ def optimize_alloy(
 # Example Usage
 if __name__ == "__main__":
 
-    initial_comp = c.initial_comp_al91
-    target_spec = c.target_ranges_A380
-    master_alloys = c.master_alloys
+    initial_comp = INITIAL_COMP_A380_TEST
+    target_spec = TARGET_RANGES_A380
     initial_mass = 100 #kg
 
     # Optimize for A356 (requires Mg addition)
     result = optimize_alloy(
         initial_composition=initial_comp,
         target_spec=target_spec,
-        master_alloys=master_alloys,
+        master_alloys=MASTER_ALLOYS,
         initial_mass=initial_mass,
         solver_method='SLSQP'  # COBYLA Better for tight constraints + SLSQP
     )
