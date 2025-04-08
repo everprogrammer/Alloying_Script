@@ -107,14 +107,14 @@ def optimize_alloy(
         total_added = np.sum(result.x)
         print("\nOptimization successful!")
         print(f"Initial mass: {initial_mass:.2f} kg")
-        print(f"Total additions: {total_added* LOSS_FACTOR_MASTER_ALLOY:.2f} kg")
-        print(f"Final mass: {final_mass:.2f} kg")
+        print(f"-> Total additions: {total_added* LOSS_FACTOR_MASTER_ALLOY:.2f} kg")
+        print(f"-> Final mass: {final_mass:.2f} kg\n")
         print(f"Total cost (relative): {objective(result.x)* LOSS_FACTOR_MASTER_ALLOY:.2f}\n")
         
         for i, key in enumerate(alloy_keys):
             if result.x[i] > 1e-3:
                 cost = scrap_cost_ratio if key == 'Scrap' else 1.0
-                print(f"Add {result.x[i] * LOSS_FACTOR_MASTER_ALLOY :.3f} kg of {key} (cost: {cost}x)")
+                print(f"- Add {result.x[i] * LOSS_FACTOR_MASTER_ALLOY :.3f} kg of {key} (cost: {cost}x)")
         # Print final composition and validate ranges
         print("\nFinal Composition (wt%):")
         for el, (low, high) in target_spec.items():
@@ -130,9 +130,9 @@ def optimize_alloy(
 if __name__ == "__main__":
 
     result = optimize_alloy(
-        initial_composition=INITIAL_COMP_AL91,
-        target_spec=TARGET_RANGES_A380,
+        initial_composition=INITIAL_COMP_AL95,
+        target_spec=A413_SPEC,
         master_alloys=MASTER_ALLOYS,
-        scrap_composition=SCRAP_COMP,
+        scrap_composition=None,
         scrap_cost_ratio=0.5  # scrap_cost_ratio=0.5 : Scrap is 50% the cost of master alloys
     )

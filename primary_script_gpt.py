@@ -7,7 +7,7 @@ import constants as c
 # Sample input data
 M0 = 100  # kg of initial metal
 initial_composition = c.INITIAL_COMP_AL91
-target_spec = c.TARGET_RANGES_A356
+target_spec = c.A356_SPEC
 
 master_alloys = {
     'Pure_Al': {'Al': 100},

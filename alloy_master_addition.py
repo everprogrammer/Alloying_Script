@@ -102,7 +102,7 @@ def optimize_alloy(
 if __name__ == "__main__":
 
     initial_comp = INITIAL_COMP_AL91
-    target_spec = TARGET_RANGES_A380
+    target_spec = A380_SPEC
     initial_mass = 100 #kg
 
     # Optimize for A356 (requires Mg addition)

@@ -95,9 +95,15 @@ def print_results(result):
     Args:
         result: Dictionary containing the optimization results (including target_ranges)
     """
-    print(f"Optimal scrap weight to add: {result['optimal_scrap_weight'] * LOSS_FACTOR_SCRAP:.2f} kg")
+    final_mass = INITIAL_WEIGHT + result['optimal_scrap_weight']
+    print(f"-> Optimal scrap weight to add: {result['optimal_scrap_weight'] * LOSS_FACTOR_SCRAP:.2f} kg")
+    print(f"-> Final mass = {final_mass:.2f} kg")
     print("\nFinal composition:")
-    for el, val in result['final_composition'].items():
+    # Sort items by percentage in descending order
+    sorted_composition = sorted(result['final_composition'].items(), 
+                           key=lambda x: x[1], 
+                           reverse=True)
+    for el, val in sorted_composition:
         if el in result['target_ranges']:
             target_min, target_max = result['target_ranges'][el]
             status = "✅ Within target" if target_min <= val <= target_max else "⚠️ Outside target"
@@ -112,9 +118,9 @@ if __name__ == "__main__":
     from constants import *
     
     result = calculate_scrap_addition(
-        initial_comp=INITIAL_COMP_AL91,
+        initial_comp=INITIAL_COMP_AL95,
         scrap_comp=SCRAP_COMP,
-        target_ranges=TARGET_RANGES_A380,
+        target_ranges=A413_SPEC,
         initial_weight=INITIAL_WEIGHT  
     )
 
