@@ -81,3 +81,35 @@ Final composition (%):
   Al: 88.37% (Balance)
   Other (trace elements): 0.0000%
   ------------------------------------------------------------------
+  Prompt for writing the best balancing applicaiton for alloying purposes:
+  Hi, I need an alloying script that does something important for me,
+  i have a composition of molten metal that is explicitly delineated in the composition for example, one 
+  sample specification is as below, however everytime the spec changes with the user input and different
+  composition that is made through melting of scrap,
+  And I have something else which is the composition of different scrap that is derived through the help
+  of XRF analysis, so the problem is how much weight of second scrap to add to the molten metal to become
+  similar to alloys as much as possible. can you help me write a python script so that it reports the Final
+  weight of scrap to be added to the molten metal to become so similar in terms of composition to a standard
+  alluminum alloy?also note that final composition after addition of scrap to molten metal, prefereably
+  composition of final elements should be below the target composition that is asked:
+
+  for instance i have the following compositions:
+  
+INITIAL_COMP_AL91 = {'Al': 90.17,'Si': 7.33 , 'Cu': 1.20, 'Fe': 0.855,
+                            'Mn': 0.0577, 'Mg': 0, 'Cr': 0.0091, 'Ni': 0.0221,
+                            'Zn': 0.0831, 'Sn': 0.0064, 'Ti': 0.0343, 'Pb': 0.15}
+
+SCRAP_COMP = {'Al':88, 'Si': 8, 'Cu': 7}
+
+TARGET_RANGES_A380 = {
+    "Al": (80, 90),          # Aluminum (base metal)
+    "Si": (7.5, 9.5),          # Silicon
+    "Cu": (3.0, 4.0),          # Cupper
+    "Fe": (0.0, 1.3),          # Iron (max 1.3%)
+    "Zn": (0.0, 3.0),          # Zinc
+    "Mn": (0.0, 0.5),          # Manganese
+    "Mg": (0.0, 0.1),          # Magnesium
+    "Ni": (0.0, 0.5),          # Nickel
+    "Sn": (0.0, 0.35),         # Tin
+    "Pb": (0.0, 0.15),         # Lead
+}

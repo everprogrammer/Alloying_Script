@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.optimize import minimize
+from constants import *
 
 def optimize_alloy(
     initial_composition,
@@ -7,7 +8,7 @@ def optimize_alloy(
     master_alloys,
     scrap_composition=None,  # New: Composition of available scrap (e.g., {'Si': 5.0, 'Al': 95.0})
     scrap_cost_ratio=0.5,    # New: Cost of scrap relative to master alloys (0.5 = half the cost)
-    initial_mass=100,
+    initial_mass=INITIAL_WEIGHT,
     solver_method='SLSQP',
     max_iter=1000,
     tol=1e-6
@@ -106,14 +107,14 @@ def optimize_alloy(
         total_added = np.sum(result.x)
         print("\nOptimization successful!")
         print(f"Initial mass: {initial_mass:.2f} kg")
-        print(f"Total additions: {total_added:.2f} kg")
+        print(f"Total additions: {total_added* LOSS_FACTOR_MASTER_ALLOY:.2f} kg")
         print(f"Final mass: {final_mass:.2f} kg")
-        print(f"Total cost (relative): {objective(result.x):.2f}\n")
+        print(f"Total cost (relative): {objective(result.x)* LOSS_FACTOR_MASTER_ALLOY:.2f}\n")
         
         for i, key in enumerate(alloy_keys):
             if result.x[i] > 1e-3:
                 cost = scrap_cost_ratio if key == 'Scrap' else 1.0
-                print(f"Add {result.x[i]:.3f} kg of {key} (cost: {cost}x)")
+                print(f"Add {result.x[i] * LOSS_FACTOR_MASTER_ALLOY :.3f} kg of {key} (cost: {cost}x)")
         # Print final composition and validate ranges
         print("\nFinal Composition (wt%):")
         for el, (low, high) in target_spec.items():
@@ -127,15 +128,11 @@ def optimize_alloy(
 
 # Example Usage
 if __name__ == "__main__":
-    from constants import (INITIAL_COMP_AL91, INITIAL_COMP_AL95, 
-                           TARGET_RANGES_A356, INITIAL_COMP_A380_TEST,
-                           TARGET_RANGES_A380, MASTER_ALLOYS, SCRAP_COMP)
-
 
     result = optimize_alloy(
-        initial_composition=INITIAL_COMP_AL95,
-        target_spec=TARGET_RANGES_A356,
+        initial_composition=INITIAL_COMP_AL91,
+        target_spec=TARGET_RANGES_A380,
         master_alloys=MASTER_ALLOYS,
         scrap_composition=SCRAP_COMP,
-        scrap_cost_ratio=0.1  # Scrap is 50% the cost of master alloys
+        scrap_cost_ratio=0.5  # scrap_cost_ratio=0.5 : Scrap is 50% the cost of master alloys
     )

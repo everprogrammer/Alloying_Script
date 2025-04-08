@@ -1,3 +1,7 @@
+INITIAL_WEIGHT = 100 #kg
+LOSS_FACTOR_SCRAP = 1 # 1.05 = 5 % loss after addition of scrap to molten metal(only for alloy_scrap addition not main alloy tool)
+LOSS_FACTOR_MASTER_ALLOY = 1 # 5% loss for melting of master-alloys
+
 
 INITIAL_COMP_AL91 = {'Al': 90.17,'Si': 7.33 , 'Cu': 1.20, 'Fe': 0.855,
                             'Mn': 0.0577, 'Mg': 0, 'Cr': 0.0091, 'Ni': 0.0221,
@@ -7,6 +11,10 @@ INITIAL_COMP_AL91 = {'Al': 90.17,'Si': 7.33 , 'Cu': 1.20, 'Fe': 0.855,
 INITIAL_COMP_AL95 = {'Al': 95.49,'Si': 2.96 , 'Cu': 0.528, 'Fe': 0.653,
                             'Mn': 0.0847, 'Mg': 0, 'Cr': 0.0052, 'Ni': 0.012,
                             'Zn': 0.0613, 'Sn': 0.0065, 'Ti': 0.0263, 'Pb': 0.157}
+
+INITIAL_COMP_RA3 = {'Al': 89.086,'Si': 7.6647 , 'Cu': 4.0972, 'Fe': 0.4279,
+                            'Mn': 0.0289, 'Mg': 0, 'Cr': 0.0046, 'Ni': 0.0111,
+                            'Zn': 0.0416, 'Sn': 0.0032, 'Ti':  0.0172, 'Pb': 0.0751}
 
 TARGET_RANGES_A356 = {
     'Al': (90.0, 94.0),  # A356 requires higher purity Al vs A380
@@ -39,11 +47,11 @@ MASTER_ALLOYS = {
     'Pure_Al': {'Al': 100},
     'Al-Si': {'Si': 50, 'Al': 50},
     'Al-Cu': {'Cu': 50, 'Al': 50},
-    'Al-Fe': {'Fe': 50, 'Al': 50},
-    'Al-Mg': {'Mg': 50, 'Al': 50},  # Critical for A356!
-    'Al-Mn': {'Mn': 50, 'Al': 50},
-    'Al-Zn': {'Zn': 50, 'Al': 50},
+    # 'Al-Fe': {'Fe': 50, 'Al': 50},
+    # 'Al-Mg': {'Mg': 50, 'Al': 50},  # Critical for A356!
+    # 'Al-Mn': {'Mn': 50, 'Al': 50},
+    # 'Al-Zn': {'Zn': 50, 'Al': 50},
     }
 
 # Define scrap composition (e.g., low-grade scrap with 5% Si, 0.1% Mg)
-SCRAP_COMP = {'Al':88, 'Si': 8, 'Cu': 7}
+SCRAP_COMP = {'Al': 88, 'Si': 8, 'Cu': 7}

@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.optimize import minimize
-from constants import (INITIAL_COMP_AL91, INITIAL_COMP_AL95, MASTER_ALLOYS,
-                       TARGET_RANGES_A356, TARGET_RANGES_A380, INITIAL_COMP_A380_TEST)
+from constants import *
 
 
 def optimize_alloy(
@@ -102,7 +101,7 @@ def optimize_alloy(
 # Example Usage
 if __name__ == "__main__":
 
-    initial_comp = INITIAL_COMP_A380_TEST
+    initial_comp = INITIAL_COMP_AL91
     target_spec = TARGET_RANGES_A380
     initial_mass = 100 #kg
 
