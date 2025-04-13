@@ -1,4 +1,4 @@
-INITIAL_WEIGHT = 100 #kg
+INITIAL_WEIGHT = 150 #kg
 LOSS_FACTOR_SCRAP = 1 # 1.05 = 5 % loss after addition of scrap to molten metal(only for alloy_scrap addition not main alloy tool)
 LOSS_FACTOR_MASTER_ALLOY = 1 # 5% loss for melting of master-alloys
 
@@ -22,6 +22,27 @@ INITIAL_COMP_RA3 = {'Al': 89.086,'Si': 7.6647 , 'Cu': 4.0972, 'Fe': 0.4279,
 INITIAL_COMP_A380_TEST = {'Al': 85,'Si': 8.5 , 'Cu': 3.5, 'Fe': 0.5,
                             'Mn': 0.0847, 'Mg': 0, 'Cr': 0.0052, 'Ni': 0.012,
                             'Zn': 0.0613, 'Pb': 0.10}
+
+COMP_23FAR = alloy_composition = {
+    'Al': 95.40,    # Aluminum
+    'Si': 3.22,     # Silicon
+    'Fe': 0.49,     # Iron
+    'Cu': 0.54,     # Copper
+    'Zn': 0.07,     # Zinc
+    'Pb': 0.14,     # Lead
+    'Mn': 0.05,     # Manganese
+    'Ti': 0.029,    # Titanium
+    'Ni': 0.01,     # Nickel
+    'Ga': 0.01,     # Gallium
+    'Co': 0.01,     # Cobalt
+    'V': 0.007,     # Vanadium
+    'Bi': 0.007,    # Bismuth
+    'Na': 0.002,    # Sodium
+    'Mg': 0.006,    # Magnesium
+    'Cr': 0.004,    # Chromium
+    'Sn': 0.005,    # Tin (reported as <0.005)
+    'B': 0.001,     # Boron (reported as <0.001)
+}
 
 A356_SPEC = {
     'Al': (90.0, 94.0),  # A356 requires higher purity Al vs A380
@@ -64,10 +85,10 @@ A413_SPEC = {
 
 MASTER_ALLOYS = {
     'Pure_Al': {'Al': 100},
-    'Al-Si': {'Si': 50, 'Al': 50},
-    'Al-Cu': {'Cu': 50, 'Al': 50},
+    'Al-Si': {'Si': 99, 'Al': 1},
+    'Al-Cu': {'Cu': 100, 'Al': 0},
     # 'Al-Fe': {'Fe': 50, 'Al': 50},
-    # 'Al-Mg': {'Mg': 50, 'Al': 50},  # Critical for A356!
+    'Al-Mg': {'Mg': 50, 'Al': 50},  # Critical for A356!
     # 'Al-Mn': {'Mn': 50, 'Al': 50},
     # 'Al-Zn': {'Zn': 50, 'Al': 50},
     }
