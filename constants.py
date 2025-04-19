@@ -1,4 +1,4 @@
-INITIAL_WEIGHT = 150 #kg
+INITIAL_WEIGHT = 149 #kg
 LOSS_FACTOR_SCRAP = 1 # 1.05 = 5 % loss after addition of scrap to molten metal(only for alloy_scrap addition not main alloy tool)
 LOSS_FACTOR_MASTER_ALLOY = 1 # 5% loss for melting of master-alloys
 
@@ -57,8 +57,8 @@ A356_SPEC = {
 
 A380_SPEC = {
     "Al": (80, 90),          # Aluminum (base metal)
-    "Si": (7.5, 9.5),          # Silicon
-    "Cu": (3.0, 4.0),          # Cupper
+    "Si": (8.5, 9.5),          # Silicon
+    "Cu": (3.3, 4.0),          # Cupper
     "Fe": (0.0, 1.3),          # Iron (max 1.3%)
     "Zn": (0.0, 3.0),          # Zinc
     "Mn": (0.0, 0.5),          # Manganese
@@ -88,7 +88,7 @@ MASTER_ALLOYS = {
     'Al-Si': {'Si': 99, 'Al': 1},
     'Al-Cu': {'Cu': 100, 'Al': 0},
     # 'Al-Fe': {'Fe': 50, 'Al': 50},
-    'Al-Mg': {'Mg': 50, 'Al': 50},  # Critical for A356!
+    # 'Al-Mg': {'Mg': 50, 'Al': 50},  # Critical for A356!
     # 'Al-Mn': {'Mn': 50, 'Al': 50},
     # 'Al-Zn': {'Zn': 50, 'Al': 50},
     }
