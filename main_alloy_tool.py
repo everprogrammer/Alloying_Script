@@ -131,8 +131,9 @@ if __name__ == "__main__":
 
     result = optimize_alloy(
         initial_composition=COMP_23FAR,
-        target_spec=A380_SPEC,
+        target_spec=LM2_SPEC,
         master_alloys=MASTER_ALLOYS,
         scrap_composition=None,
-        scrap_cost_ratio=0.5  # scrap_cost_ratio=0.5 : Scrap is 50% the cost of master alloys
+        scrap_cost_ratio=0.5,  # scrap_cost_ratio=0.5 : Scrap is 50% the cost of master alloys
+        initial_mass=149
     )
