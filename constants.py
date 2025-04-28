@@ -44,6 +44,25 @@ COMP_23FAR = alloy_composition = {
     'B': 0.001,     # Boron (reported as <0.001)
 }
 
+COMP_2ORD = {
+    'Si': 3.84,
+    'Fe': 0.49,
+    'Cu': 0.64,
+    'Mn': 0.06,
+    'Mg': 0.004,
+    'Cr': 0.005,
+    'Ni': 0.01,
+    'Zn': 0.07,
+    'Ti': 0.016,
+    'Pb': 0.13,
+    'Sn': 0.006,
+    'V': 0.01,
+    'Na': 0.002,
+    'Co': 0.01,
+    'Ga': 0.01,
+    'Al': 94.70
+}
+
 A356_SPEC = {
     'Al': (90.0, 94.0),  # A356 requires higher purity Al vs A380
     'Si': (6.5, 7.5),    # Narrower Si range than A380
