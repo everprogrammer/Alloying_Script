@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.optimize import minimize
 from constants import *
+from __future__ import annotations
 
 def optimize_alloy(
     initial_composition,
@@ -135,6 +136,6 @@ if __name__ == "__main__":
         master_alloys=MASTER_ALLOYS,
         scrap_composition=None,
         scrap_cost_ratio=0.5,  # scrap_cost_ratio=0.5 : Scrap is 50% the cost of master alloys
-        initial_mass=500
+        initial_mass=498
     )
     
