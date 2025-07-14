@@ -4,18 +4,48 @@ from typing import Dict, List, Tuple
 class InitialComposition:
     def __init__(self, name: str, composition: Dict):
         self.name = name
-        self.composition = composition
+        self._composition = composition
+
+    @property
+    def name(self):
+        return self.name
+    
+    @name.setter
+    def name(self, value: str):
+        if not isinstance(value, str):
+            raise ValueError('Name of the initial molten composition must be of type string...')
+        self.name = value
+
+    @property
+    def composition(self):
+        return self._composition
 
     def get_element(self, element: str) -> float:
-        return self.composition.get(element, 0.0)
+        print(f'Getting percentage of elemen: {element}')
+        return self._composition.get(element, 0.0)
+    
+    def set_element(self, element:str, value: float) -> float:
+        print(f'Setting new value for element {element}...')
+        self._composition[element] = value
+        return value
     
     def __repr__(self):
-        return str(self.composition)
+        return str(self._composition)
     
 class TargetCompositionConstrain:
     def __init__(self, name: str, composition: Dict):
         self.name = name
         self._composition = composition
+
+    @property
+    def name(self):
+        return self.name
+    
+    @name.setter
+    def name(self, value: str):
+        if not isinstance(value, str):
+            raise ValueError('Name of the alloy must be of type string...')
+        self.name = value
 
     @property
     def composition(self):
@@ -41,6 +71,35 @@ class TargetCompositionConstrain:
     
 
 if __name__ == '__main__':
+    i1 = InitialComposition('test1', {
+    'Al': 95.40,    # Aluminum
+    'Si': 3.22,     # Silicon
+    'Fe': 0.49,     # Iron
+    'Cu': 0.54,     # Copper
+    'Zn': 0.07,     # Zinc
+    'Pb': 0.14,     # Lead
+    'Mn': 0.05,     # Manganese
+    'Ti': 0.029,    # Titanium
+    'Ni': 0.01,     # Nickel
+    'Ga': 0.01,     # Gallium
+    'Co': 0.01,     # Cobalt
+    'V': 0.007,     # Vanadium
+    'Bi': 0.007,    # Bismuth
+    'Na': 0.002,    # Sodium
+    'Mg': 0.006,    # Magnesium
+    'Cr': 0.004,    # Chromium
+    'Sn': 0.005,    # Tin (reported as <0.005)
+    'B': 0.001,     # Boron (reported as <0.001)
+}
+)
+    print(i1.composition)
+    print('\n')
+    print(i1.get_element('Cu'))
+    print('\n')
+    print(i1.set_element('Cu', 5))
+    print('\n')
+    print(i1.get_element('Cu'))
+
     t1 = TargetCompositionConstrain('A380', {
     "Al": (80, 90),          # Aluminum (base metal)
     "Si": (8.5, 9.5),          # Silicon
