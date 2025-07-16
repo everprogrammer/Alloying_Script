@@ -23,7 +23,7 @@ INITIAL_COMP_A380_TEST = {'Al': 85,'Si': 8.5 , 'Cu': 3.5, 'Fe': 0.5,
                             'Mn': 0.0847, 'Mg': 0, 'Cr': 0.0052, 'Ni': 0.012,
                             'Zn': 0.0613, 'Pb': 0.10}
 
-COMP_23FAR = alloy_composition = {
+COMP_23FAR = {
     'Al': 95.40,    # Aluminum
     'Si': 3.22,     # Silicon
     'Fe': 0.49,     # Iron

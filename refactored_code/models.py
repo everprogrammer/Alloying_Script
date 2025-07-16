@@ -1,24 +1,32 @@
 from abc import ABC, abstractmethod
 from typing import Dict, List, Tuple
+from dataclasses import dataclass
 
 class InitialComposition:
-    def __init__(self, name: str, composition: Dict):
-        self.name = name
+    def __init__(self, name: str, composition: Dict, weight=100):
+        self._name = name
+        if not isinstance(composition, Dict):
+            raise ValueError('Composition must be a valid Dictionary object!')
         self._composition = composition
+        self.weight = weight
 
     @property
     def name(self):
-        return self.name
+        return self._name
     
     @name.setter
     def name(self, value: str):
         if not isinstance(value, str):
             raise ValueError('Name of the initial molten composition must be of type string...')
-        self.name = value
+        self._name = value
 
     @property
     def composition(self):
         return self._composition
+    
+    @property
+    def weight(self):
+        return self.weight
 
     def get_element(self, element: str) -> float:
         print(f'Getting percentage of elemen: {element}')
@@ -32,9 +40,9 @@ class InitialComposition:
     def __repr__(self):
         return str(self._composition)
     
-class TargetCompositionConstrain:
+class TargetCompositionConstraint:
     def __init__(self, name: str, composition: Dict):
-        self.name = name
+        self._name = name
         self._composition = composition
 
     @property
@@ -68,7 +76,20 @@ class TargetCompositionConstrain:
     
     def __repr__(self):
         return str(self._composition)
-    
+
+@dataclass    
+class MasterAlloy:
+    name: str                     # e.g., "Al-Cu 30%"
+    composition: Dict[str, float] # e.g., {"Al": 30, "Cu": 70}
+
+    def validate(self):
+        """Ensure composition percentage sum is 100%"""
+        total = sum(self.composition.values())
+        if not abs(100 - total) < 1e-6:
+            raise ValueError(f"Composition for {self.name} must sum to 100%, got {total}%")
+
+class MasterAlloyFactory:
+    """Factory for creating MasterAlloy objects"""
 
 if __name__ == '__main__':
     i1 = InitialComposition('test1', {
@@ -100,7 +121,7 @@ if __name__ == '__main__':
     print('\n')
     print(i1.get_element('Cu'))
 
-    t1 = TargetCompositionConstrain('A380', {
+    t1 = TargetCompositionConstraint('A380', {
     "Al": (80, 90),          # Aluminum (base metal)
     "Si": (8.5, 9.5),          # Silicon
     "Cu": (3.3, 4.0),          # Cupper
