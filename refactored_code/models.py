@@ -141,7 +141,9 @@ class MasterAlloyRegistry:
             self.add(alloy)
         
     def remove(self, name: str):
-        pass
+        if name not in [ma.name for ma in self._master_alloys]:
+            raise ValueError(f'Master alloy({name}) does not exist!')
+        self._master_alloys = [ma for ma in self._master_alloys if ma.name != name]
 
     def clear(self):
         self._master_alloys.clear()

@@ -13,8 +13,11 @@ if __name__ == '__main__':
     registry = MasterAlloyRegistry()
     registry.add(MasterAlloy.add_from_name('Cu-Al 100%'))
     registry.add(MasterAlloy.add_from_name('Si-Al 99%'))
+    registry.add(MasterAlloy.add_from_name('Al-Mg 50%'))
     registry.get_master_alloys_names
-    # registry.remove('Si-Al 99%')
+    registry.remove('Al-Mg 50%')
+    registry.get_master_alloys_names
+
 
     optimizer = NonLinearOptimizationStrategy()
 
