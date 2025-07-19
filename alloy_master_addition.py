@@ -101,7 +101,7 @@ def optimize_alloy(
 # Example Usage
 if __name__ == "__main__":
 
-    initial_comp = INITIAL_COMP_AL91
+    initial_comp = COMP_23FAR
     target_spec = A380_SPEC
     initial_mass = 100 #kg
 

@@ -35,7 +35,6 @@ class InitialComposition:
         self._weight = value
 
     def get_element(self, element: str) -> float:
-        print(f'Getting percentage of elemen: {element}')
         return self._composition.get(element, 0.0)
     
     def set_element(self, element:str, value: float) -> float:
@@ -47,7 +46,7 @@ class InitialComposition:
         return str(self._composition)
     
 class TargetCompositionConstraint:
-    def __init__(self, name: str, composition: Dict):
+    def __init__(self, name: str, composition: Dict[str, tuple[float, float]]):
         self._name = name
         self._composition = composition
 

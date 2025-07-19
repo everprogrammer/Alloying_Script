@@ -68,7 +68,7 @@ class NonLinearOptimizationStrategy(OptimizationStrategy):
         # Constraints for scipy
         cons = [
             {'type': 'ineq', 'fun': lambda x, i=i: constraints(x)[i]}
-            for i in range(len(target_spec.composition) * 2)
+            for i in range(len(target_spec.composition.values()) * 2)
         ]
 
         # Initial guess

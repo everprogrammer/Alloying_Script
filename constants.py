@@ -76,7 +76,7 @@ A356_SPEC = {
 
 A380_SPEC = {
     "Al": (80, 90),          # Aluminum (base metal)
-    "Si": (8.5, 9.5),          # Silicon
+    "Si": (7.5, 9.5),          # Silicon
     "Cu": (3.3, 4.0),          # Cupper
     "Fe": (0.0, 1.3),          # Iron (max 1.3%)
     "Zn": (0.0, 3.0),          # Zinc
@@ -117,8 +117,8 @@ LM2_SPEC = {
 }
 
 MASTER_ALLOYS = {
-    'Pure_Al': {'Al': 100},
-    'Al-Si': {'Si': 99, 'Al': 1},
+    # 'Pure_Al': {'Al': 100},
+    'Al-Si': {'Si': 100, 'Al': 0},
     'Al-Cu': {'Cu': 100, 'Al': 0},
     # 'Al-Fe': {'Fe': 50, 'Al': 50},
     # 'Al-Mg': {'Mg': 50, 'Al': 50},  # Critical for A356!
