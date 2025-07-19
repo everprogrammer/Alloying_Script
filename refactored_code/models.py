@@ -30,8 +30,8 @@ class InitialComposition:
     
     @weight.setter
     def weight(self, value):
-        if not isinstance(value, float):
-            raise ValueError(f'Weight must be of type float: {value}')
+        if not isinstance(value, float) and not isinstance(value, int):
+            raise ValueError(f'Weight must be of type float/int: {value}')
         self._weight = value
 
     def get_element(self, element: str) -> float:

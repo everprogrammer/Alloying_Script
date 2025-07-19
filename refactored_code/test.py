@@ -5,7 +5,7 @@ from constants import *
 
 if __name__ == '__main__':
     # Create an initial metal with name, composition and weight
-    i1 = InitialComposition('initial', COMP_2ORD, weight=498)
+    i1 = InitialComposition('Initial', COMP_2ORD, weight=100)
 
     # Create the target alloy instance
     t1 = TargetCompositionConstraint('LM2', LM2_SPEC)
@@ -15,9 +15,6 @@ if __name__ == '__main__':
     registry.add(MasterAlloy.add_from_name('Si-Al 99%'))
     registry.add(MasterAlloy.add_from_name('Al-Mg 50%'))
     registry.get_master_alloys_names
-    registry.remove('Al-Mg 50%')
-    registry.get_master_alloys_names
-
 
     optimizer = NonLinearOptimizationStrategy()
 
