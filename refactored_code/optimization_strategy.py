@@ -3,12 +3,11 @@ from abc import ABC, abstractmethod
 from models import *
 import numpy as np
 from scipy.optimize import minimize
-## Extract optimization from alloy_master_addition
 
 
 class OptimizationStrategy(ABC):
     @abstractmethod
-    def optimize_alloy(self, *args, **kwargs)
+    def optimize_alloy(self, *args, **kwargs):
         pass
 
 class NonLinearOptimizationStrategy(OptimizationStrategy):
@@ -89,7 +88,7 @@ class NonLinearOptimizationStrategy(OptimizationStrategy):
             for i, key in enumerate(alloy_keys):
                 if result.x[i] > 1e-1:  # Only show additions > 0.1 kg
                     print(f"Add {result.x[i]:.2f} kg of {key}")
-                    result_dict[key] = result.x[i]
+                    result_dict[key] = round(float(result.x[i]), 2  )
         else:
             print("\nOptimization failed:", result.message)
             print("Try relaxing constraints or adding more master alloys.")

@@ -1,5 +1,4 @@
-from abc import ABC, abstractmethod
-from typing import Dict, List, Tuple
+from typing import Dict, List
 from dataclasses import dataclass
 
 class InitialComposition:
@@ -48,7 +47,8 @@ class InitialComposition:
     def __str__(self):
         return str(self._composition)
     
-class TargetCompositionConstraint:
+    
+class TargetCompositionRange:
     def __init__(self, name: str, composition: Dict[str, tuple[float, float]]):
         self._name = name
         self._composition = composition
@@ -82,12 +82,12 @@ class TargetCompositionConstraint:
     
     def __repr__(self):
         return str(self._composition)
+    
 
 @dataclass    
 class MasterAlloy:
     name: str                     # e.g., "Al-Cu 30%"
     composition: Dict[str, float] # e.g., {"Al": 30, "Cu": 70}
-
 
     def validate(self):
         """Ensure composition percentage sum is 100%"""
@@ -114,7 +114,6 @@ class MasterAlloy:
 
 
 class MasterAlloyRegistry:
-
     def __init__(self):
         self._master_alloys : List[MasterAlloy] = []
 
