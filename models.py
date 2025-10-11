@@ -96,7 +96,7 @@ class MasterAlloy:
             raise ValueError(f"Composition for {self.name} must sum to 100%, got {total}%")
     
     @classmethod
-    def     add_from_name(cls, name: str) -> 'MasterAlloy':
+    def add_from_name(cls, name: str) -> 'MasterAlloy':
         parts = name.split()
 
         if len(parts) != 2 or '%' not in parts[1]:

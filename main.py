@@ -11,6 +11,7 @@ if __name__ == '__main__':
     target_1 = TargetCompositionRange('LM2', LM2_SPEC)
 
     registry = MasterAlloyRegistry()
+    
     # add_from_name ## e.g. 'Al-Mn 40%' -> follow syntax:(Al 40%, Mn 60%)
     registry.add(MasterAlloy.add_from_name('Cu-Al 100%'))
     registry.add(MasterAlloy.add_from_name('Si-Al 99%'))
