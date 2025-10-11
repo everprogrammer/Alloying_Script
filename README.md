@@ -51,15 +51,24 @@ Alloying_Script/
   scipy
   pandas
   
-- Install dependencies with:
-  `pip install -r requirements.txt`
+
   
-  🚀 How to Use
+  ## 🚀 How to Use
 1. Clone the Repository
 `git clone https://github.com/everprogrammer/Alloying_Script.git
 cd Alloying_Script`
 
-2. Run the Script
+- Create a virtual environment
+  `python -m venv venv`
+
+- Activate the virtual environment
+  Bash
+  `source venv/Scripts/activate`
+
+- Install dependencies with:
+  `pip install -r requirements.txt`
+
+3. Run the Script
 Run the main optimization script from the command line:
 `python main.py`
 
@@ -75,15 +84,15 @@ Suggested Additions:
   FeCu50_50: 20g
   Ni: 5g
 
-🧮 Optimization Approach
+## 🧮 Optimization Approach
 
-Depending on configuration, the script uses:
-
-Nonlinear optimization strategy to calculate the additions
-
-Modify or extend the core logic in optimization_strategy.py to suit your use case.
-
-⚙️ Configuration
+  Depending on configuration, the script uses:
+  
+  Nonlinear optimization strategy to calculate the additions
+  
+  Modify or extend the core logic in optimization_strategy.py to suit your use case.
+  
+  ## ⚙️ Configuration
 
   Edit constants in constants.py:
   
@@ -95,13 +104,13 @@ Modify or extend the core logic in optimization_strategy.py to suit your use cas
   
   You can override constants by command-line arguments or config files.
 
-🧪 Testing
+## 🧪 Testing
 
   If you add tests, use pytest or unittest:
 
   `pytest tests/`
 
-Recommended test cases:
+### Recommended test cases:
 
   - Alloy with known composition solution
   
@@ -109,7 +118,7 @@ Recommended test cases:
   
   - Randomized datasets for performance testing
 
-🤝 Contributing
+##🤝 Contributing
 
   Contributions are welcome!
   To contribute:
@@ -130,13 +139,13 @@ Make sure your code:
   
   - Is well documented
 
-📜 License
+## 📜 License
 
 This project is licensed under the MIT License.
 See the LICENSE
  file for full details.
 
-🙏 Acknowledgments
+## 🙏 Acknowledgments
   
   - Special thanks to:
   
