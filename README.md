@@ -62,7 +62,7 @@ cd Alloying_Script`
   `python -m venv venv`
 
 - Activate the virtual environment
-  Bash
+  (Bash)
   `source venv/Scripts/activate`
 
 - Install dependencies with:
@@ -74,15 +74,16 @@ Run the main optimization script from the command line:
 
 Expected Output (example):
 
-Optimized Alloy Composition:
-  Fe: 60.1%
-  Cu: 24.8%
-  Ni: 15.1%
+`Master alloys in this registry are as follows:
+['Cu-Al 100%', 'Si-Al 99%', 'Al-Mg 50%']
 
-Suggested Additions:
-  Fe: 40g
-  FeCu50_50: 20g
-  Ni: 5g
+Optimization successful!
+Initial mass: 100.00 kg
+Final mass: 106.44 kg 
+
+Add 0.11 kg of Cu-Al 100%
+Add 6.34 kg of Si-Al 99%
+Optimization result: {'Cu-Al 100%': 0.11, 'Si-Al 99%': 6.34}`
 
 ## 🧮 Optimization Approach
 
@@ -96,13 +97,20 @@ Suggested Additions:
 
   Edit constants in constants.py:
   
-  - Elemental bounds and tolerances
-  
-  - Default target compositions
-  
-  - Optimization step sizes
-  
-  You can override constants by command-line arguments or config files.
+  - Edit MASTER_ALLOYS
+  - Add Target Alloy Specifications if not available(e.g. AA-Aluminum Alloys Specifications)
+  - Add Initial Composition
+  # Change main.py file accordingly
+  - Define initial composition(e.g. InitialComposition('Initial', COMP_2ORD, weight=100))
+  - Define target composition(e.g. TargetCompositionRange('LM2', LM2_SPEC))
+  - Add to registry master alloys names(e.g. registry.add(MasterAlloy.add_from_name('Cu-Al 100%')))
+  - Adjust the result variable(e.g. result = optimizer.optimize_alloy(initial_composition=initial_1,
+                                      target_spec=target_1,
+                                      master_alloys=registry.master_alloys,
+                                      initial_mass=initial_1.weight,
+                                      solver_method='SLSQP'
+                                      )
+
 
 ## 🧪 Testing
 
