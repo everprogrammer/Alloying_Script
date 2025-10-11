@@ -118,7 +118,7 @@ Suggested Additions:
   
   - Randomized datasets for performance testing
 
-##🤝 Contributing
+## 🤝 Contributing
 
   Contributions are welcome!
   To contribute:
