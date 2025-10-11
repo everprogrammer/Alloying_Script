@@ -100,7 +100,7 @@ Optimization result: {'Cu-Al 100%': 0.11, 'Si-Al 99%': 6.34}
   - Edit MASTER_ALLOYS
   - Add Target Alloy Specifications if not available(e.g. AA-Aluminum Alloys Specifications)
   - Add Initial Composition
-  # Change main.py file accordingly
+  # Change `main.py` file accordingly
   - Define initial composition(e.g. InitialComposition('Initial', COMP_2ORD, weight=100))
   - Define target composition(e.g. TargetCompositionRange('LM2', LM2_SPEC))
   - Add to registry master alloys names(e.g. registry.add(MasterAlloy.add_from_name('Cu-Al 100%')))
