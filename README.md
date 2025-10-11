@@ -76,15 +76,15 @@ Expected Output (example):
 
 `Master alloys in this registry are as follows:
 ['Cu-Al 100%', 'Si-Al 99%', 'Al-Mg 50%']
-
+``
 Optimization successful!
 Initial mass: 100.00 kg
 Final mass: 106.44 kg 
-
+``
 Add 0.11 kg of Cu-Al 100%
 Add 6.34 kg of Si-Al 99%
-Optimization result: {'Cu-Al 100%': 0.11, 'Si-Al 99%': 6.34}`
-
+Optimization result: {'Cu-Al 100%': 0.11, 'Si-Al 99%': 6.34}
+`
 ## 🧮 Optimization Approach
 
   Depending on configuration, the script uses:
