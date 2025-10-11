@@ -53,7 +53,7 @@ Alloying_Script/
   
 
   
-  ## 🚀 How to Use
+## 🚀 How to Use
 1. Clone the Repository
 `git clone https://github.com/everprogrammer/Alloying_Script.git
 cd Alloying_Script`
