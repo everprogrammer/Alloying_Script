@@ -50,3 +50,103 @@ Alloying_Script/
   numpy
   scipy
   pandas
+  
+- Install dependencies with:
+  `pip install -r requirements.txt`
+  
+  🚀 How to Use
+1. Clone the Repository
+`git clone https://github.com/everprogrammer/Alloying_Script.git
+cd Alloying_Script`
+
+2. Run the Script
+Run the main optimization script from the command line:
+`python main.py`
+
+Expected Output (example):
+
+Optimized Alloy Composition:
+  Fe: 60.1%
+  Cu: 24.8%
+  Ni: 15.1%
+
+Suggested Additions:
+  Fe: 40g
+  FeCu50_50: 20g
+  Ni: 5g
+
+🧮 Optimization Approach
+
+Depending on configuration, the script uses:
+
+Nonlinear optimization strategy to calculate the additions
+
+Modify or extend the core logic in optimization_strategy.py to suit your use case.
+
+⚙️ Configuration
+
+Edit constants in constants.py:
+
+- Elemental bounds and tolerances
+
+- Default target compositions
+
+- Optimization step sizes
+
+You can override constants by command-line arguments or config files.
+
+🧪 Testing
+
+If you add tests, use pytest or unittest:
+
+`pytest tests/`
+
+Recommended test cases:
+
+- Alloy with known composition solution
+
+- Invalid or extreme bounds
+
+- Randomized datasets for performance testing
+
+🤝 Contributing
+
+Contributions are welcome!
+To contribute:
+
+- Fork the repository
+
+- Create a feature branch: `git checkout -b feature/your-feature`
+
+- Commit your changes
+
+- Submit a Pull Request
+
+Make sure your code:
+
+- Passes linting (flake8, black)
+
+- Includes basic tests
+
+- Is well documented
+
+📜 License
+
+This project is licensed under the MIT License.
+See the LICENSE
+ file for full details.
+
+🙏 Acknowledgments
+
+Special thanks to:
+
+The open-source community
+
+Materials scientists and engineers inspiring the optimization logic
+
+Author: everprogrammer
+
+Repository: Alloying_Script
+
+🧠 Optimize smarter, alloy better!
+
