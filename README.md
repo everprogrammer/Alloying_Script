@@ -85,50 +85,50 @@ Modify or extend the core logic in optimization_strategy.py to suit your use cas
 
 ⚙️ Configuration
 
-Edit constants in constants.py:
-
-- Elemental bounds and tolerances
-
-- Default target compositions
-
-- Optimization step sizes
-
-You can override constants by command-line arguments or config files.
+  Edit constants in constants.py:
+  
+  - Elemental bounds and tolerances
+  
+  - Default target compositions
+  
+  - Optimization step sizes
+  
+  You can override constants by command-line arguments or config files.
 
 🧪 Testing
 
-If you add tests, use pytest or unittest:
+  If you add tests, use pytest or unittest:
 
-`pytest tests/`
+  `pytest tests/`
 
 Recommended test cases:
 
-- Alloy with known composition solution
-
-- Invalid or extreme bounds
-
-- Randomized datasets for performance testing
+  - Alloy with known composition solution
+  
+  - Invalid or extreme bounds
+  
+  - Randomized datasets for performance testing
 
 🤝 Contributing
 
-Contributions are welcome!
-To contribute:
-
-- Fork the repository
-
-- Create a feature branch: `git checkout -b feature/your-feature`
-
-- Commit your changes
-
-- Submit a Pull Request
+  Contributions are welcome!
+  To contribute:
+  
+  - Fork the repository
+  
+  - Create a feature branch: `git checkout -b feature/your-feature`
+  
+  - Commit your changes
+  
+  - Submit a Pull Request
 
 Make sure your code:
 
-- Passes linting (flake8, black)
-
-- Includes basic tests
-
-- Is well documented
+  - Passes linting (flake8, black)
+  
+  - Includes basic tests
+  
+  - Is well documented
 
 📜 License
 
@@ -137,16 +137,14 @@ See the LICENSE
  file for full details.
 
 🙏 Acknowledgments
-
-Special thanks to:
-
-The open-source community
-
-Materials scientists and engineers inspiring the optimization logic
-
-Author: everprogrammer
-
-Repository: Alloying_Script
+  
+  - Special thanks to:
+  
+  - Materials scientists and engineers inspiring the optimization logic
+  
+  - Author: everprogrammer
+  
+  - Repository: Alloying_Script
 
 🧠 Optimize smarter, alloy better!
 
