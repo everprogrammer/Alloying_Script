@@ -155,7 +155,7 @@ See the LICENSE
 
 ## 🙏 Acknowledgments
   
-  - Special thanks to:
+ Special thanks to:
   
   - Materials scientists and engineers inspiring the optimization logic
   
